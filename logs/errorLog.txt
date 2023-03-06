@@ -1,2 +1,4 @@
 20230306	16:20:19	ceb98164-62ed-4bb1-829a-d28bdac4ce43	Error: Not allowed by CORS
 20230306	16:20:54	1bd71fc4-3610-4ac0-a58f-4e5912196c84	Error: Not allowed by CORS
+20230306	18:23:23	2f8dae8f-5faa-42ae-9638-6846f0ea9a5d	TypeError: req.json is not a function
+20230306	18:24:03	95316e47-26b6-4dd6-9287-6e71f7223165	TypeError: req.json is not a function
