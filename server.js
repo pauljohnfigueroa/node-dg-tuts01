@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const path = require('path')
 const cors = require('cors')
+const corsOptions = require('./config/corsOptions')
 const { logger } = require('./middleware/logEvents')
 const errorHandler = require('./middleware/errorHandler')
 const PORT = process.env.PORT || 3500
@@ -9,20 +10,9 @@ const PORT = process.env.PORT || 3500
 // middlewares
 // our custom logger middleware
 app.use(logger)
+
 // Cross Origin Resource Sharing
-// you must have a shitelist of allowed domains
-const whitelist = ['https://www.google.com', 'http://localhost:3500/']
-const corsOptions = {
-  origin: (origin, callback) => {
-    // remove || !origin in production
-    if (whitelist.indexOf(origin) !== -1 || !origin) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  },
-  optionsSuccessStatus: 200
-}
+// you must have a whitelist of allowed domains, see config/corsOptions
 app.use(cors(corsOptions))
 
 // built-in middleware to handle url encoded data, or meaning form data
@@ -32,10 +22,8 @@ app.use(express.json())
 
 // server static files
 app.use('/', express.static(path.join(__dirname, '/public')))
-app.use('/subdir', express.static(path.join(__dirname, '/public')))
 
 app.use('/', require('./routes/root'))
-app.use('/subdir', require('./routes/subdir'))
 app.use('/employees', require('./routes/api/employees'))
 
 // default route
