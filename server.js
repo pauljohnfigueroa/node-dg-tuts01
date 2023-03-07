@@ -6,6 +6,8 @@ const corsOptions = require('./config/corsOptions')
 const { logger } = require('./middleware/logEvents')
 const errorHandler = require('./middleware/errorHandler')
 const PORT = process.env.PORT || 3500
+const verifyJWT = require('./middleware/verifyJWT')
+const cookieParser = require('cookie-parser')
 
 // middlewares
 // our custom logger middleware
@@ -20,10 +22,19 @@ app.use(express.urlencoded({ extended: false }))
 // json middleware
 app.use(express.json())
 
+// middleware for cookies
+app.use(cookieParser())
+
 // server static files
 app.use('/', express.static(path.join(__dirname, '/public')))
 
 app.use('/', require('./routes/root'))
+app.use('/register', require('./routes/register'))
+app.use('/auth', require('./routes/auth'))
+app.use('/refresh', require('./routes/refresh'))
+app.use('/logout', require('./routes/logout'))
+
+app.use(verifyJWT) // everything after this line will use the verifyJWT middleware
 app.use('/employees', require('./routes/api/employees'))
 
 // default route
