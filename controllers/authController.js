@@ -22,7 +22,7 @@ const handleLogin = async (req, res) => {
     const match = await bcrypt.compare(pwd, foundUser.password)
 
     if (match) {
-        const roles = Object.values(foundUser.roles)
+        const roles = Object.values(foundUser.roles).filter(Boolean)
         // this is where we create JWT
         const accessToken = jwt.sign(
             {
@@ -54,7 +54,7 @@ const handleLogin = async (req, res) => {
         // )
         // set cookie maxAge to 1 day, also add {secure: true} to use https, in production
         res.cookie('jwt', refreshToken, { httpOnly: true, maxAge: 24 * 60 * 60 * 1000 }) // put back secure: true
-        res.json({ accessToken })
+        res.json({ roles, accessToken })
 
     } else {
         res.sendStatus(401)

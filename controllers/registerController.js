@@ -11,17 +11,17 @@ const User = require('../model/User')
 const bcrypt = require('bcrypt')
 
 const handleNewUser = async (req, res) => {
-    const { user, pwd } = req.body
-    if (!user || !pwd) return res.status(400).json({ 'message': 'Username and password are required.' })
+    const { username, password, email, phone } = req.body
+    if (!username || !password || !email) return res.status(400).json({ 'message': 'Username, password, and email are required.' })
 
     // check for duplicate
     //const duplicate = usersDB.users.find(person => person.username === user)
-    const duplicate = await User.findOne({ username: user }).exec()
+    const duplicate = await User.findOne({ username }).exec()
     if (duplicate) return res.sendStatus(409) // code 409 is for conflict
 
     try {
         // hash password
-        const hashedPassword = await bcrypt.hash(pwd, 10)
+        const hashedPassword = await bcrypt.hash(password, 10)
         // store the new user
         // const newUser = {
         //     "username": user,
@@ -29,8 +29,11 @@ const handleNewUser = async (req, res) => {
         //     "password": hashedPassword
         // }
         const result = await User.create({
-            "username": user,
-            "password": hashedPassword
+            "username": username,
+            "password": hashedPassword,
+            "email": email,
+            "phone": phone
+
         })
         console.log(result)
         // usersDB.setUsers([...usersDB.users, newUser])
@@ -40,7 +43,7 @@ const handleNewUser = async (req, res) => {
         // )
         // console.log(usersDB.users)
 
-        res.status(201).json({ 'success': `New user ${user} created.` })
+        res.status(201).json({ 'success': `New user ${username} created.` })
 
     } catch (error) {
         res.status(500).json({ 'message': error.message })
