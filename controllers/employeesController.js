@@ -17,7 +17,7 @@ const getAllEmployees = async (req, res) => {
 }
 
 const createNewEmployee = async (req, res) => {
-  if (req?.body?.firstname || !req?.body?.lastname) {
+  if (!req?.body?.firstname || !req?.body?.lastname) {
     return res.status(400).json({ 'message': 'First and last names are required.' })
   }
 
@@ -41,8 +41,8 @@ const createNewEmployee = async (req, res) => {
   //   return res.status(400).json({ 'message': 'First and last names are required.' })
   // }
 
-  data.setEmployees([...data.employees, newEmployee])
-  res.status(201).json(data.employees)
+  // data.setEmployees([...data.employees, newEmployee])
+  // res.status(201).json(data.employees)
 }
 
 const updateEmployee = async (req, res) => {
@@ -73,7 +73,7 @@ const deleteEmployee = async (req, res) => {
   if (!employee) {
     return res.status(204).json({ "message": `No Employee ID matches ${req.body.id}.` });
   }
-  const result = employee.deleteOne({ _id: req.body.id })
+  const result = await employee.deleteOne({ _id: req.body.id })
   res.json(result);
   // const employee = data.employees.find(emp => emp.id === parseInt(req.body.id));
   // if (!employee) {
