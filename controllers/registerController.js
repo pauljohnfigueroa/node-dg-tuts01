@@ -1,10 +1,13 @@
-const usersDB = {
-    users: require('../model/users.json'),
-    setUsers: function (data) { this.users = data }
-}
+// const usersDB = {
+//     users: require('../model/users.json'),
+//     setUsers: function (data) { this.users = data }
+// }
 
-const fsPromises = require('fs').promises
-const path = require('path')
+// const fsPromises = require('fs').promises
+// const path = require('path')
+
+const User = require('../model/User')
+
 const bcrypt = require('bcrypt')
 
 const handleNewUser = async (req, res) => {
@@ -12,23 +15,31 @@ const handleNewUser = async (req, res) => {
     if (!user || !pwd) return res.status(400).json({ 'message': 'Username and password are required.' })
 
     // check for duplicate
-    const duplicate = usersDB.users.find(person => person.username === user)
+    //const duplicate = usersDB.users.find(person => person.username === user)
+    const duplicate = await User.findOne({ username: user }).exec()
     if (duplicate) return res.sendStatus(409) // code 409 is for conflict
+
     try {
         // hash password
         const hashedPassword = await bcrypt.hash(pwd, 10)
         // store the new user
-        const newUser = {
+        // const newUser = {
+        //     "username": user,
+        //     "roles": { "User": 2001 },
+        //     "password": hashedPassword
+        // }
+        const result = await User.create({
             "username": user,
-            "roles": { "User": 2001 },
             "password": hashedPassword
-        }
-        usersDB.setUsers([...usersDB.users, newUser])
-        await fsPromises.writeFile(
-            path.join(__dirname, '..', 'model', 'users.json'),
-            JSON.stringify(usersDB.users)
-        )
-        console.log(usersDB.users)
+        })
+        console.log(result)
+        // usersDB.setUsers([...usersDB.users, newUser])
+        // await fsPromises.writeFile(
+        //     path.join(__dirname, '..', 'model', 'users.json'),
+        //     JSON.stringify(usersDB.users)
+        // )
+        // console.log(usersDB.users)
+
         res.status(201).json({ 'success': `New user ${user} created.` })
 
     } catch (error) {

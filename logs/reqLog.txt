@@ -126,3 +126,14 @@
 20230307	13:44:07	ab7ed489-604b-4424-be3d-a0e8cfdc99ea	DELETE	undefined	/employees
 20230307	13:44:14	6d9a8572-8588-4ff2-a71d-b93f6cf529b5	POST	undefined	/auth
 20230307	13:44:22	a94189a9-130e-4c2b-9487-1765f0bb84ab	DELETE	undefined	/employees
+20230307	14:08:03	aad0059f-5147-473f-b486-1d78791ec97a	GET	undefined	/css/style.css
+20230307	14:08:03	f368ac7a-3d0f-49e5-9423-615e7ea33d5d	GET	undefined	/img/img1.jpg
+20230307	14:56:55	420d7be5-8e32-44a5-b1e1-0f6fd47fd4b1	POST	undefined	/register
+20230307	14:57:59	90e81c72-1b34-4c02-a088-7cea82df835a	POST	undefined	/register
+20230307	15:00:32	c0f62117-ae50-4e26-9929-87daf8613810	POST	undefined	/register
+20230307	15:28:08	64cda24b-30f1-4a3b-9619-ccb420d4d230	POST	undefined	/auth
+20230307	15:28:30	ca054ac5-e314-42fa-9ff8-e751db092449	GET	undefined	/refresh
+20230307	15:29:11	74d1a93c-0c44-4810-bfee-ec2ee02c5c3e	POST	undefined	/auth
+20230307	15:29:29	79b8671c-34a2-4fc6-8da9-2e49af07eb91	GET	undefined	/logout
+20230307	15:29:48	23c7cb46-91db-4dcf-8d59-11efac0ff9bd	POST	undefined	/auth
+20230307	15:30:23	332d5f18-2420-4cfd-9278-c432a249e0f3	GET	undefined	/logout
