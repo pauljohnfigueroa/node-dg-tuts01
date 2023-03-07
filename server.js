@@ -5,6 +5,7 @@ const cors = require('cors')
 const corsOptions = require('./config/corsOptions')
 const { logger } = require('./middleware/logEvents')
 const errorHandler = require('./middleware/errorHandler')
+const credentials = require('./middleware/credentials')
 const PORT = process.env.PORT || 3500
 const verifyJWT = require('./middleware/verifyJWT')
 const cookieParser = require('cookie-parser')
@@ -12,6 +13,9 @@ const cookieParser = require('cookie-parser')
 // middlewares
 // our custom logger middleware
 app.use(logger)
+
+// handle options credentials
+app.use(credentials)
 
 // Cross Origin Resource Sharing
 // you must have a whitelist of allowed domains, see config/corsOptions
